@@ -26,11 +26,11 @@ class Parser:
         # Redescribe the environment (Location)
         elif command == "look" or command == "l":
             return "redescribe"
-        elif "examine " in command or command.startswith("x ") in command:
+        elif "examine" in command or command.startswith("x "):
             return "examine"
-        elif "take " in command or "get " in command:
+        elif "take" in command or "get " in command:
             return "take"
-        elif "drop " in command:
+        elif "drop" in command:
             return "drop"
         elif "inventory" in command or command == "i":
             return "inventory"
@@ -53,6 +53,7 @@ class Parser:
         """
         # Add this command to history
         self.command_history.append(command)
+        end_game = False
 
         # Intents are functions that can be executed
         intent = self.get_player_intent(command)
@@ -68,7 +69,7 @@ class Parser:
             self.drop(command)
         elif intent == "inventory":
             self.check_inventory(command)
-        elif intent == "sepcial":
+        elif intent == "special":
             end_game = self.run_special_command(command)
         elif intent == "sequence":
             end_game = self.execute_sequence(command)

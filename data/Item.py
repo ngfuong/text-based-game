@@ -10,10 +10,17 @@ class Item:
         :param description: default description of Item
         :param examine_text: detailed description when the player examines the Item
         :param take_text: text displayed when the player takes the Item
-        :param start_at:
+        :param start_at: the initial Location of the Item
         :param gettable: indicates whether the player can take the object and put it in their Inventory
         :param end_game: True if entering this Location should end the game
         """
+        self.name = name
+        self.description = description
+        self.examine_text = examine_text
+        self.take_text = take_text
+        self.gettable = gettable
+        self.end_game = end_game
+
         if start_at:
             start_at.add_item(name,self)
         self.commands = {}
@@ -28,8 +35,8 @@ class Item:
         """
         Add a special action associated with the Item
         :param command_text:
-        :param function:
-        :param arguments:
+        :param function: this function will be called
+        :param arguments: argument for the respective function
         :param preconditions:
         :return:
         """

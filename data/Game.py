@@ -6,7 +6,7 @@ class Game:
     The player can move from one Location to another Location via command "Go North".
     """
 
-    def __intit__(self, start_at):
+    def __init__(self, start_at):
         """
         :param start_at: the location in the game where the player starts
         :return: None

@@ -1,4 +1,5 @@
 from . import *
+from .special_functions import *
 
 
 def build_game():
@@ -8,7 +9,7 @@ def build_game():
     cliff = Location("Cliff",
                      "There is a steep cliff here. You fall off the cliff and lose the game. THE END.",
                      end_game=True)
-    fishing_pond = Location("Fishing Pond", "You are at the edge of a small fising pond.")
+    fishing_pond = Location("Fishing Pond", "You are at the edge of a small fishing pond.")
 
     # Connections
     cottage.add_connection("out", garden_path)
@@ -29,14 +30,15 @@ def build_game():
     pond = Item("pond", "a small fishing pond", "THERE ARE FISH IN THE POND", start_at=fishing_pond, gettable=False)
 
     # Add special functions to items
-    rosebush.add_action("pick rose", add_item_to_inventory, (rose, "You pick the lone rose from the rosebush.",
+    rosebush.add_action("pick rose", add_item_to_inventory, (rose,
+                                                             "You pick the lone rose from the rosebush.",
                                                              "You already picked the rose."))
     rose.add_action("smell rose", describe_something, ("It smells sweet."))
     pond.add_action("catch fish", describe_something,
-                    ("You reach into the pond and try to catch a fish with your hands, but they are too fast"))
+                    ("You reach into the pond and try to catch a fish with your hands, but they are too fast."))
     pond.add_action("catch fish with pole",
                     add_item_to_inventory, (fish,
-                                            "You dip your hook into the pond and catch a fish",
+                                            "You dip your hook into the pond and catch a fish.",
                                             "You weren't able to catch any other fish."),
                     preconditions={"inventory_contains": fishing_pole})
     fish.add_action("eat fish",
