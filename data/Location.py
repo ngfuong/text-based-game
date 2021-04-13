@@ -1,4 +1,5 @@
-from check_preconditions import check_preconditions
+from . import check_preconditions
+
 
 class Location:
     """
@@ -43,28 +44,28 @@ class Location:
         self.travel_descriptions[direction] = travel_description
         if direction == "north":
             connected_location.connections["south"] = self
-            connected_location.travel_description["south"] = ""
+            connected_location.travel_descriptions["south"] = ""
         if direction == "south":
             connected_location.connections["north"] = self
-            connected_location.travel_description["north"] = ""
+            connected_location.travel_descriptions["north"] = ""
         if direction == "east":
             connected_location.connections["west"] = self
-            connected_location.travel_description["west"] = ""
+            connected_location.travel_descriptions["west"] = ""
         if direction == "west":
             connected_location.connections["east"] = self
-            connected_location.travel_description["east"] = ""
+            connected_location.travel_descriptions["east"] = ""
         if direction == "up":
             connected_location.connections["down"] = self
-            connected_location.travel_description["down"] = ""
+            connected_location.travel_descriptions["down"] = ""
         if direction == "down":
             connected_location.connections["up"] = self
-            connected_location.travel_description["up"] = ""
+            connected_location.travel_descriptions["up"] = ""
         if direction == "in":
             connected_location.connections["out"] = self
-            connected_location.travel_description["out"] = ""
+            connected_location.travel_descriptions["out"] = ""
         if direction == "out":
             connected_location.connections["in"] = self
-            connected_location.travel_description["in"] = ""
+            connected_location.travel_descriptions["in"] = ""
 
     def add_item(self, name, item):
         """

@@ -1,4 +1,4 @@
-from check_preconditions import check_preconditions
+from . import check_preconditions
 
 class Item:
     """
