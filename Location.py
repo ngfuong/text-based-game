@@ -1,3 +1,5 @@
+from check_preconditions import check_preconditions
+
 class Location:
     """
     Locations are the in-game places that a player can visit.
@@ -80,6 +82,21 @@ class Location:
         :return:
         """
         self.items.pop(item.name)
+
+    def is_blocked(self, direction, game):
+        """
+        Check if there is an obstable in this Direction
+        :param direction:
+        :param game:
+        :return:
+        """
+        if not direction in self.blocks:
+            return False
+        (block_description, preconditions) = self.blocks[direction]
+        if check_preconditions(preconditions, game):
+            return False
+        else:
+            return True
 
     def get_block_description(self, direction):
         """
