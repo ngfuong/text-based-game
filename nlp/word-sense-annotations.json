@@ -1,11 +1,28 @@
 {
-    "hypernyms": {},
+    "hypernyms": {
+        "fish": [],
+        "give": [],
+        "go": [],
+        "north": [],
+        "troll": [
+            "mythical_monster.n.01",
+            "monster.n.01"
+        ]
+    },
     "hyponyms": {
-        "crown": [],
-        "wear": []
+        "fish": [],
+        "give": [],
+        "go": [
+            "venture.v.01"
+        ],
+        "north": [],
+        "troll": []
     },
     "senses": {
-        "crown": "crown.n.01",
-        "wear": "wear.v.01"
+        "fish": "fish.n.01",
+        "give": "give.v.03",
+        "go": "go.v.02",
+        "north": "north.n.05",
+        "troll": "troll.n.01"
     }
 }

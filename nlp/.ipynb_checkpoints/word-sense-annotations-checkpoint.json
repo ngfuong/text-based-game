@@ -1,0 +1,18 @@
+{
+    "hypernyms": {
+        "pick": [
+            "choose.v.01"
+        ],
+        "rose": []
+    },
+    "hyponyms": {
+        "pick": [
+            "hand-pick.v.01"
+        ],
+        "rose": []
+    },
+    "senses": {
+        "pick": "pick.v.01",
+        "rose": "rose.n.01"
+    }
+}
