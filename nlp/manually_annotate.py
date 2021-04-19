@@ -3,12 +3,11 @@
 #nltk.download('punkt')
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
-from os import system
+import os
 
 
 def clear():
-    system('clear')
-
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 """
 Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
@@ -59,7 +58,7 @@ def annotate_synsets(sentences):
     cached_selections = {}
 
     for i, sent in enumerate(sentences):
-        print("-----------\n%s\n----------:" % sent.upper(), end='')
+        print("-----------\n%s\n-----------" % sent.upper())
         words = word_tokenize(sent.lower())
 
         for word in words:
@@ -71,7 +70,7 @@ def annotate_synsets(sentences):
                     if selection < len(synsets):
                         s = synsets[selection]
                         word_senses[word] = s.name()
-            print()
+        clear()
     print("===")
     return word_senses
 
@@ -116,20 +115,21 @@ def select_synset(sent, word, synsets, cached_selections):
             return selection
 
 
-def confirm_hyponyms(word, sysnset, do_hypernyms_instead=False):
+def confirm_hyponyms(word, synset, do_hypernyms_instead=False):
     """Ask the user to confirm which of the hyponyms are applicable
        for this sentence."""
-    print("\n", word.upper())
+    print("{word}".format(word=word.upper()))
 
     confirmed = []
     if do_hypernyms_instead:
-        unconfirmed = sysnset.hypernyms()
+        unconfirmed = synset.hypernyms()
     else:
-        unconfirmed = sysnset.hyponyms()
+        unconfirmed = synset.hyponyms()
 
     while len(unconfirmed) > 0:
         s = unconfirmed.pop(0)
-        print("Is %s an appropriate substitute for %s? (y/n)" % (s.name(), word))
+        print("Is {name} an appropriate substitute for {word}? (y/n/x)".format(name=s.name().upper(),
+                                                                             word=word.upper()))
         print("It means:", s.definition())
         print("Synonyms are:", get_synonyms(s))
         user_input = ''

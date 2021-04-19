@@ -15,12 +15,12 @@ def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms):
         json.dump(output_json, f, ensure_ascii=False, sort_keys=True, indent=4)
 
 
-def read_from_file():
+def read_from_file(input_file_path):
     """
     This function reads your annotations from a local file.
     :return:
     """
-    input_file = "word-sense-annotations.json"
+    input_file = input_file_path
     with open(input_file, 'r') as f:
         data = json.load(f)
 

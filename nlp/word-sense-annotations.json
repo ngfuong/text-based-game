@@ -1,28 +1,19 @@
 {
     "hypernyms": {
-        "fish": [],
-        "give": [],
-        "go": [],
-        "north": [],
-        "troll": [
-            "mythical_monster.n.01",
-            "monster.n.01"
-        ]
+        "pick": [
+            "choose.v.01"
+        ],
+        "rose": []
     },
     "hyponyms": {
-        "fish": [],
-        "give": [],
-        "go": [
-            "venture.v.01"
-        ],
-        "north": [],
-        "troll": []
+        "pick": [],
+        "rose": [
+            "banksia_rose.n.01",
+            "cherokee_rose.n.01"
+        ]
     },
     "senses": {
-        "fish": "fish.n.01",
-        "give": "give.v.03",
-        "go": "go.v.02",
-        "north": "north.n.05",
-        "troll": "troll.n.01"
+        "pick": "pick.v.01",
+        "rose": "rose.n.01"
     }
 }
