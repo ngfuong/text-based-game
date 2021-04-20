@@ -1,7 +1,8 @@
-from .Location import Location
-from .Item import Item
-from .Game import Game
-from .Parser import Parser
-from .check_preconditions import check_preconditions
-from .build_game import build_game
-#from .special_functions import *
+__all__ = ["check_preconditions","special_functions", "Game", "Item", "Location", "Parser"]
+from data.Location import Location
+from data.Item import Item
+from data.Game import Game
+from data.Parser import Parser
+from data.check_preconditions import check_preconditions
+from data.build_game import build_game
+from data.special_functions import *

@@ -39,7 +39,8 @@ def read_from_file(input_file_path):
 
 def get_alternatives(word, word_senses, confirmed_hypernyms, confirmed_hyponyms):
     """
-    Create a list of reasonable alternative for a word by listing out the synonyms for its word sense, and for its hyponyms and hypernyms
+    Create a list of reasonable alternative for a word
+    by listing out the synonyms for its word sense, and for its hyponyms and hypernyms
     """
     alternatives = []
     if word not in word_senses:
