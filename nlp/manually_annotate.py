@@ -1,6 +1,7 @@
 #import nltk
 #nltk.download('wordnet')
 #nltk.download('punkt')
+
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 import os
@@ -9,13 +10,12 @@ import os
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-"""
-Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
-Each word can have multiple synsets, each synset represents a different meaning of that word.
-"""
+
 def get_senses(word):
     """
-    Returns a list of senses (synsets) of a word
+    Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
+    Each word can have multiple synsets, each synset represents a different meaning of that word.
+    :return: a list of senses (synsets) of a word
     """
     word_senses = wn.synsets(word)
     return word_senses

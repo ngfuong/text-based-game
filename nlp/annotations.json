@@ -1,0 +1,18 @@
+{
+    "hypernyms": {
+        "catch": [
+            "seize.v.01"
+        ],
+        "fish": []
+    },
+    "hyponyms": {
+        "catch": [
+            "fish.v.02"
+        ],
+        "fish": []
+    },
+    "senses": {
+        "catch": "catch.v.04",
+        "fish": "fish.n.01"
+    }
+}
