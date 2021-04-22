@@ -5,7 +5,7 @@ from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 
 
-def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms, file_path="/home/ngfuong/programming/text-based-game/nlp/annotations.json"):
+def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms, file_path="/home/ngfuong/programming/text-based-game/nlp/word-annotations.json"):
     """
     This function saves your annotations to a local file.
     :param word_senses:
@@ -94,7 +94,7 @@ def generate_annotations(commands):
     return confirmed_word_senses, confirmed_hypernyms, confirmed_hyponyms
 
 
-def generate_commands(commands, file_path="/home/ngfuong/programming/text-based-game/nlp/annotations.json"):
+def generate_command_dict(commands, file_path="/home/ngfuong/programming/text-based-game/nlp/word-annotations.json"):
     """
     Generate alternative commands a dictionary of {main-commands:list of alternatives}
     :return:
@@ -116,4 +116,26 @@ def generate_commands(commands, file_path="/home/ngfuong/programming/text-based-
         command: enumerate_alternatives(command, senses, hypernyms, hyponyms)
         for command in commands
     }
+    return alternative_commands
+
+
+def generate_command_list(commands, file_path="/home/ngfuong/programming/text-based-game/nlp/word-annotations.json"):
+    try:
+        filesize = os.path.getsize(file_path)
+        if filesize == 0:
+            print("NO ANNOTATION DATA.", end=' ')
+            senses, hypernyms, hyponyms = generate_annotations(commands)
+            save_to_file(senses, hyponyms, hypernyms, file_path)
+        else:
+            print("IMPORTING LOCAL ANNOTATIONS...")
+            senses, hypernyms, hyponyms = read_from_file(file_path)
+    except OSError:
+        print("OSError: File does not exist or inaccessible!")
+        return None
+
+    alternative_commands = [
+        cmd
+        for command in commands
+        for cmd in enumerate_alternatives(command, senses, hypernyms, hyponyms)
+    ]
     return alternative_commands

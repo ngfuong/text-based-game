@@ -1,4 +1,4 @@
-from pymagnitude import *
+from pymagnitude import Magnitude
 import numpy as np
 from nlp.generate_commands import *
 
@@ -40,6 +40,6 @@ commands = [
   "catch fish",
   "pick rose"
 ]
-command_dict = generate_commands(commands)
-# print(find_most_similar_command("catch a fish", command_dict.values(), vectors))
-print(command_dict.values())
+
+ls = generate_command_list(commands)
+print(find_most_similar_command("catch a fish", ls, vectors))
