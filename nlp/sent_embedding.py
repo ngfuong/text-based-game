@@ -42,4 +42,4 @@ commands = [
 ]
 
 ls = generate_command_list(commands)
-print(find_most_similar_command("catch a fish", ls, vectors))
+print(find_most_similar_command("get fish", ls, vectors))

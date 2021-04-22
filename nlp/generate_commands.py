@@ -102,11 +102,11 @@ def generate_command_dict(commands, file_path="/home/ngfuong/programming/text-ba
     try:
         filesize = os.path.getsize(file_path)
         if filesize == 0:
-            print("NO ANNOTATION DATA.", end=' ')
+            #print("NO ANNOTATION DATA.", end=' ')
             senses, hypernyms, hyponyms = generate_annotations(commands)
             save_to_file(senses, hyponyms, hypernyms, file_path)
         else:
-            print("IMPORTING LOCAL ANNOTATIONS...")
+            #print("IMPORTING LOCAL ANNOTATIONS...")
             senses, hypernyms, hyponyms = read_from_file(file_path)
     except OSError:
         print("OSError: File does not exist or inaccessible!")
@@ -123,11 +123,11 @@ def generate_command_list(commands, file_path="/home/ngfuong/programming/text-ba
     try:
         filesize = os.path.getsize(file_path)
         if filesize == 0:
-            print("NO ANNOTATION DATA.", end=' ')
+            #print("NO ANNOTATION DATA.", end=' ')
             senses, hypernyms, hyponyms = generate_annotations(commands)
             save_to_file(senses, hyponyms, hypernyms, file_path)
         else:
-            print("IMPORTING LOCAL ANNOTATIONS...")
+            #print("IMPORTING LOCAL ANNOTATIONS...")
             senses, hypernyms, hyponyms = read_from_file(file_path)
     except OSError:
         print("OSError: File does not exist or inaccessible!")
