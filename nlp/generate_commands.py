@@ -5,7 +5,7 @@ from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 
 
-def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms):
+def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms, file_path="/home/ngfuong/programming/text-based-game/nlp/annotations.json"):
     """
     This function saves your annotations to a local file.
     :param word_senses:
@@ -13,10 +13,9 @@ def save_to_file(word_senses, confirmed_hyponyms, confirmed_hypernyms):
     :param confirmed_hypernyms:
     :return:
     """
-    output_file = 'annotations.json'
     output_json = {'senses': word_senses, 'hyponyms': confirmed_hyponyms, 'hypernyms': confirmed_hypernyms}
-    with open(output_file, 'w') as f:
-        json.dump(output_json, f, ensure_ascii=False, sort_keys=True, indent=4)
+    with open(file_path, 'w') as f:
+        json.dump(file_path, f, ensure_ascii=False, sort_keys=True, indent=4)
 
     return word_senses, confirmed_hypernyms, confirmed_hyponyms
 
@@ -95,7 +94,7 @@ def generate_annotations(commands):
     return confirmed_word_senses, confirmed_hypernyms, confirmed_hyponyms
 
 
-def generate_commands(commands, file_path="annotations.json"):
+def generate_commands(commands, file_path="/home/ngfuong/programming/text-based-game/nlp/annotations.json"):
     """
     Generate alternative commands a dictionary of {main-commands:list of alternatives}
     :return:
@@ -105,7 +104,7 @@ def generate_commands(commands, file_path="annotations.json"):
         if filesize == 0:
             print("NO ANNOTATION DATA.", end=' ')
             senses, hypernyms, hyponyms = generate_annotations(commands)
-            save_to_file(senses, hyponyms, hypernyms)
+            save_to_file(senses, hyponyms, hypernyms, file_path)
         else:
             print("IMPORTING LOCAL ANNOTATIONS...")
             senses, hypernyms, hyponyms = read_from_file(file_path)
