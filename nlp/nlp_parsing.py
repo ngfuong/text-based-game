@@ -21,6 +21,7 @@ def verb_object_pairs(sentence):
 
     return pairs
 
+
 def conference_resolution(sentence):
     print('Sentence:', sentence)
 
@@ -36,6 +37,7 @@ def conference_resolution(sentence):
         entity_str = words[entity_indices[0]:entity_indices[1]+1]
         pronoun_str = words[pronoun_indices[0]:pronoun_indices[1]+1]
         print("{pronoun} references {entity}".format(pronoun=pronoun_str, entity=entity_str))
+
 
 print(conference_resolution("Take the apple from the table and eat it."))
 
