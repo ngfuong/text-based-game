@@ -1,5 +1,8 @@
-from . import *
-from .special_functions import *
+from data.Game import Game
+from data.Item import Item
+from data.Location import Location
+from data.special_functions import *
+from nlp.generate_commands import generate_command_list
 
 
 def build_game():
@@ -34,8 +37,11 @@ def build_game():
                                                              "You pick the lone rose from the rosebush.",
                                                              "You already picked the rose."))
     rose.add_action("smell rose", describe_something, ("It smells sweet."))
-    pond.add_action("catch fish", describe_something,
+
+    for cmd in generate_command_list("catch fish"):
+        pond.add_action(cmd, describe_something,
                     ("You reach into the pond and try to catch a fish with your hands, but they are too fast."))
+
     pond.add_action("catch fish with pole",
                     add_item_to_inventory, (fish,
                                             "You dip your hook into the pond and catch a fish.",

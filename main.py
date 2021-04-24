@@ -1,4 +1,6 @@
-from data import *
+from data import Parser
+from data.build_game import build_game
+from data.Parser import Parser
 
 
 def game_loop():
