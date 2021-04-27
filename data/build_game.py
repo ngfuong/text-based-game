@@ -20,14 +20,14 @@ def build_game():
     garden_path.add_connection("south", fishing_pond)
 
     # Items that can be pick up
-    fishing_pole = Item("pole", "a fishing pole", "A SIMPLE FISHING POLE", start_at=cottage)
-    potion = Item("potion", "a poisonous potion", "IT'S BRIGHT GREEN AND STEAMING",
+    fishing_pole = Item("pole", "a fishing pole", "It's just a simple fishing pole", start_at=cottage)
+    potion = Item("potion", "a poisonous potion", "It's bright green and steaming",
                   start_at=cottage,
                   take_text="As you get near the potion, the fumes cause you to faint and lose the game. THE END.")
-    rosebush = Item("rosebush", "a rosebush", "THE ROSEBUSH CONTAINS A SINGLE RED ROSE. IT IS BEAUTIFUL",
+    rosebush = Item("rosebush", "a rosebush", "The rosebush contains a single red rose. It is beautiful",
                     start_at=garden_path)
-    rose = Item("rose", "a red rose", "IT SMELLS GOOD", start_at=None)
-    fish = Item("fish", "a dead fish", "IT SMELLS TERRIBLE", start_at=None)
+    rose = Item("rose", "a red rose", "It smells good", start_at=None)
+    fish = Item("fish", "a dead fish", "It smells terrible", start_at=None)
 
     # Items that cannot be pick up
     pond = Item("pond", "a small fishing pond", "THERE ARE FISH IN THE POND", start_at=fishing_pond, gettable=False)
@@ -40,7 +40,7 @@ def build_game():
 
     for cmd in generate_command_list("catch fish"):
         pond.add_action(cmd, describe_something,
-                    ("You reach into the pond and try to catch a fish with your hands, but they are too fast."))
+                        ("You reach into the pond and try to catch a fish with your hands, but they are too fast."))
 
     pond.add_action("catch fish with pole",
                     add_item_to_inventory, (fish,
@@ -49,6 +49,7 @@ def build_game():
                     preconditions={"inventory_contains": fishing_pole})
     fish.add_action("eat fish",
                     end_game,
-                    ("That's disgusting! It's raw! And definitely not sashima-grade! But you've won this version of the game. THE END."))
+                    (
+                        "That's disgusting! It's raw! And definitely not sashima-grade! But you've won this version of the game. THE END."))
 
     return Game(cottage)

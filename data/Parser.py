@@ -115,7 +115,7 @@ class Parser:
             for item_name in self.game.inventory:
                 item = self.game.inventory[item_name]
                 descriptions.append(item.description)
-            print("You have:", end='')
+            print("You have:", end=' ')
             print(*descriptions, sep=", ",)
 
     def examine(self, command):
@@ -155,6 +155,7 @@ class Parser:
         :param command:
         :return: whether the game ends
         """
+        #TODO: Consider changing this
         command = command.lower()
         matched_item = False
         end_game = False

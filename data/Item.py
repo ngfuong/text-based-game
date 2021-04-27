@@ -17,7 +17,8 @@ class Item:
         self.name = name
         self.description = description
         self.examine_text = examine_text
-        self.take_text = take_text
+        if take_text == "":
+            self.take_text = "You have taken the {name}.".format(name=self.name)
         self.gettable = gettable
         self.end_game = end_game
 

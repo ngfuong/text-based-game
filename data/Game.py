@@ -22,7 +22,8 @@ class Game:
         :return:
         """
         self.describe_current_location()
-        self.describe_exits()
+        # Hide exits
+        # self.describe_exits()
         self.describe_items()
 
     def describe_current_location(self):
@@ -30,7 +31,7 @@ class Game:
         List the current Location.
         :return:
         """
-        print(self.curr_location)
+        print(self.curr_location.description)
 
     def describe_exits(self):
         """
@@ -40,20 +41,23 @@ class Game:
         exits = []
         for exit in self.curr_location.connections.keys():
             exits.append(exit.capitalize())
-        if len(exits)>0:
+        if len(exits) > 0:
             print("Exits: ", end='')
             print(*exits, sep=", ",)
 
     def describe_items(self):
-        if len(self.curr_location.items)>0:
-            print("You see: ")
-            for item_name in self.curr_location.items:
-                item = self.curr_location.items[item_name]
-                print(item.description)
-                if self.print_commands:
-                    special_commands = item.get_commands()
-                    for cmd in special_commands:
-                        print('\t', cmd)
+        items = self.curr_location.items
+        if len(items) > 0:
+            print("There is ", end='') if len(items) == 1 else print("There are ", end='')
+            print(", ".join(items[item_name].description for item_name in items)+'.')
+            # for item_name in self.curr_location.items:
+            #     item = self.curr_location.items[item_name]
+            #     print(item.description)
+            #     #print(*exits, sep=", ", )
+            #     if self.print_commands:
+            #         special_commands = item.get_commands()
+            #         for cmd in special_commands:
+            #             print('\t', cmd)
 
     def add_to_inventory(self, item):
         """

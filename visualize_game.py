@@ -1,6 +1,8 @@
 from graphviz import Digraph
 from IPython.display import Image
 import queue
+from data.build_game import build_game
+
 
 def DFS(game, graph):
   """Do a depth-first-search traversal of the locations in the game
@@ -51,14 +53,15 @@ def describe_items(location, print_commands=True):
         for cmd in special_commands:
           items_html += "<br/><i>%s</i>" % cmd
     return items_html
+
+
 """
 def save_to_drive(graph):
   from google.colab import drive
   drive.mount('/content/drive/')
   graph.render('/content/drive/My Drive/game-visualization', view=True)
+"""
 
 graph = Digraph(node_attr={'color': 'lightblue2', 'style': 'filled'})
 game = build_game()
 DFS(game, graph)
-#save_to_drive(graph)
-"""
