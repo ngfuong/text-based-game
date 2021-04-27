@@ -1,4 +1,4 @@
-from . import check_preconditions
+from data.check_preconditions import check_preconditions
 
 class Item:
     """
@@ -43,7 +43,7 @@ class Item:
         """
         self.commands[command_text] = (function, arguments, preconditions)
 
-    def take_action(self, command_text, game):
+    def do_action(self, command_text, game):
         """
         Performs a special action associated with the Item
         :param command_text:

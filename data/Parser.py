@@ -99,7 +99,7 @@ class Parser:
                         self.game.describe()
 
             else:
-                print("You cannot go to that direction.")
+                print("You cannot travel in that direction. Try something else.")
         return self.game.curr_location.end_game
 
     def check_inventory(self, command):

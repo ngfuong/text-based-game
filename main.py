@@ -8,13 +8,15 @@ def game_loop():
     parser = Parser(game)
     game.describe()
 
-    command = ""
-    while not command.lower() == "quit" and not command.lower == "q":
-        command = input(">")
-        end_game = parser.parse_command(command)
-        if end_game:
+    while True:
+        command = input(">").lower()
+        if not (command == "quit" or command == "q"):
+            end_game = parser.parse_command(command)
+            if end_game:
+                return
+        else:
             return
 
 
 game_loop()
-print('THE GAME HAS ENDED')
+print('THANKS FOR PLAYING.')

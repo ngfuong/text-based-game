@@ -9,6 +9,7 @@ def add_item_to_inventory(game, *args):
     if not game.is_in_inventory(item):
         print(action_description)
         game.add_to_inventory(item)
+        print("You've just got a {item}.".format(item=item.name))
     else:
         print(already_done_description)
     return False

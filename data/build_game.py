@@ -21,7 +21,7 @@ def build_game():
 
     # Items that can be pick up
     fishing_pole = Item("pole", "a fishing pole", "It's just a simple fishing pole", start_at=cottage)
-    potion = Item("potion", "a poisonous potion", "It's bright green and steaming",
+    potion = Item("potion", "a bottle of potion", "It's bright green and steaming",
                   start_at=cottage,
                   take_text="As you get near the potion, the fumes cause you to faint and lose the game. THE END.")
     rosebush = Item("rosebush", "a rosebush", "The rosebush contains a single red rose. It is beautiful",
@@ -30,7 +30,7 @@ def build_game():
     fish = Item("fish", "a dead fish", "It smells terrible", start_at=None)
 
     # Items that cannot be pick up
-    pond = Item("pond", "a small fishing pond", "THERE ARE FISH IN THE POND", start_at=fishing_pond, gettable=False)
+    pond = Item("pond", "a small fishing pond", "There are fish swimming in the pond.", start_at=fishing_pond, gettable=False)
 
     # Add special functions to items
     rosebush.add_action("pick rose", add_item_to_inventory, (rose,
