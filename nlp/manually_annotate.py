@@ -7,10 +7,6 @@ from nltk.tokenize import word_tokenize
 import os
 
 
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
 def get_senses(word):
     """
     Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
@@ -70,7 +66,6 @@ def annotate_synsets(sentences):
                     if selection < len(synsets):
                         s = synsets[selection]
                         word_senses[word] = s.name()
-        clear()
     print("===")
     return word_senses
 

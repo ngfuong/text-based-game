@@ -42,7 +42,6 @@ def destroy_item(game, *args):
         game.curr_location.remove_item(item)
         print(action_description)
     else:
-        #TODO: WHat the hell
         print(already_done_description)
     return False
 

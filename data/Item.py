@@ -16,9 +16,14 @@ class Item:
         """
         self.name = name
         self.description = description
-        self.examine_text = examine_text
+        if examine_text == "":
+            self.examine_text = "You do not see anything special."
+        else:
+            self.examine_text = examine_text
         if take_text == "":
             self.take_text = "You have taken the {name}.".format(name=self.name)
+        else:
+            self.take_text = take_text
         self.gettable = gettable
         self.end_game = end_game
 
@@ -56,7 +61,7 @@ class Item:
             if check_preconditions(preconditions, game):
                 end_game = function(game, arguments)
         else:
-            print("Cannot perform this action.")
+            print("You cannot do that. Try something else.")
         return end_game
 
 

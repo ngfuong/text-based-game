@@ -1,18 +1,41 @@
 {
     "hypernyms": {
-        "catch": [
-            "seize.v.01"
+        "catch": [],
+        "eat": [
+            "consume.v.02"
         ],
-        "fish": []
+        "fish": [],
+        "pick": [
+            "choose.v.01"
+        ],
+        "pole": [
+            "rod.n.01"
+        ],
+        "rose": [],
+        "smell": []
     },
     "hyponyms": {
         "catch": [
-            "fish.v.02"
+            "fish.v.02",
+            "hook.v.08"
         ],
-        "fish": []
+        "eat": [],
+        "fish": [],
+        "pick": [],
+        "pole": [],
+        "rose": [],
+        "smell": [
+            "get_a_noseful.v.01",
+            "sniff.v.01"
+        ]
     },
     "senses": {
         "catch": "catch.v.04",
-        "fish": "fish.n.01"
+        "eat": "feed.v.06",
+        "fish": "fish.n.01",
+        "pick": "pick.v.01",
+        "pole": "pole.n.01",
+        "rose": "rose.n.01",
+        "smell": "smell.v.01"
     }
 }

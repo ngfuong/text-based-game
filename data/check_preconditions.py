@@ -2,6 +2,8 @@
 In text-based adventure game, it is common to block a player's progress by creating blocks that prevents them from
 moving from a Location to another.
 """
+
+
 def check_preconditions(preconditions, game, print_failure_message=True):
     """
     Check if the preconditions are met.
@@ -14,7 +16,7 @@ def check_preconditions(preconditions, game, print_failure_message=True):
     for condition in preconditions:
         if condition == "inventory_contains":
             item = preconditions[condition]
-            #TODO: Change this to modify game dynamics
+            # TODO: Change this to modify game dynamics
             if not game.is_in_inventory(item):
                 all_conditions_met = False
                 if print_failure_message:
@@ -31,7 +33,7 @@ def check_preconditions(preconditions, game, print_failure_message=True):
                 all_conditions_met = False
                 if print_failure_message:
                     print("Item is not in this location.")
-        #TODO: Add other kind of conditions
+        # TODO: Add other kind of conditions
     return all_conditions_met
 
 

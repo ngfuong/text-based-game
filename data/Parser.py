@@ -14,24 +14,26 @@ class Parser:
         self.game = game
 
     def get_player_intent(self, command):
-        #TODO: Consider changing this
-        command = command.lower()
         # Let the player type in a comma-separated sequence of command
         if "," in command:
             return "sequence"
         # Check for direction intent
         elif self.get_direction(command):
             return "direction"
-        #TODO: Consider changing this
+        # TODO: Consider changing this
         # Redescribe the environment (Location)
         elif command == "look" or command == "l":
             return "redescribe"
+        # Examine
         elif "examine" in command or command.startswith("x "):
             return "examine"
-        elif "take" in command or "get " in command:
+        # Take Item
+        elif "take" in command:
             return "take"
+        # Drop Item
         elif "drop" in command:
             return "drop"
+        # Check inventory
         elif "inventory" in command or command == "i":
             return "inventory"
         else:
@@ -57,6 +59,17 @@ class Parser:
 
         # Intents are functions that can be executed
         intent = self.get_player_intent(command)
+        # intent_dict = {
+        #     "direction": self.go_in_direction(command),
+        #     "redescribe": self.game.describe(),
+        #     "examine": self.examine(command),
+        #     "take": self.take(command),
+        #     "drop": self.drop(command),
+        #     "inventory": self.check_inventory(command),
+        #     "special": self.run_special_command(command),
+        #     "sequence": self.execute_sequence(command)
+        # }
+
         if intent == "direction":
             end_game = self.go_in_direction(command)
         elif intent == "redescribe":
@@ -75,6 +88,8 @@ class Parser:
             end_game = self.execute_sequence(command)
         else:
             print("Not sure what you want to do.")
+
+        return end_game
 
     """
     Intent Functions
@@ -124,30 +139,23 @@ class Parser:
         :param command:
         :return:
         """
-        #TODO: Consider changing this
-        command = command.lower()
-        matched_item = False
-
         # Item in command matches items in current Location
         for item_name in self.game.curr_location.items:
             if item_name in command:
                 item = self.game.curr_location.items[item_name]
                 if item.examine_text:
+                    # Describe item in Location and bypass checking item in Inventory
                     print(item.examine_text)
-                    matched_item = True
-                break
+                    return
 
         # Item in command matches items in Inventory
         for item_name in self.game.inventory:
             if item_name in command:
                 item = self.game.inventory[item_name]
                 if item.examine_text:
+                    # Describe item in Inventory
                     print(item.examine_text)
-                    matched_item = True
-
-        # No match
-        if not matched_item:
-            print("You do not see anything special.")
+                    return
 
     def take(self, command):
         """
@@ -155,13 +163,12 @@ class Parser:
         :param command:
         :return: whether the game ends
         """
-        #TODO: Consider changing this
-        command = command.lower()
         matched_item = False
         end_game = False
 
-        # Item in command matches items in current Location:
+        # Check if item in command matches any item of current Location:
         for item_name in self.game.curr_location.items:
+            # Matched
             if item_name in command:
                 item = self.game.curr_location.items[item_name]
                 if item.gettable:
@@ -171,20 +178,13 @@ class Parser:
                     end_game = item.end_game
                 else:
                     print("You cannot take this item.")
+                    break
                 matched_item = True
                 break
 
-        #TODO: check this function
-        # Item in command matches item in Inventory
+        # Not matched
         if not matched_item:
-            for item_name in self.game.inventory:
-                if item_name in command:
-                    print("You already have this item.")
-                    matched_item = True
-
-        # No match
-        if not matched_item:
-            print("You can't find this item.")
+            print("You cannot find this item.")
 
         return end_game
 
@@ -194,8 +194,6 @@ class Parser:
         :param command:
         :return:
         """
-        #TODO: Consider changing this
-        command = command.lower()
         matched_item = False
 
         # Item in command matches items in Inventory
@@ -223,8 +221,7 @@ class Parser:
         for item in self.game.get_items_in_scope():
             special_commands = item.get_commands()
             for special_command in special_commands:
-                #TODO: Consider changing this
-                if command == special_command.lower():
+                if command == special_command:
                     # do_action is a special function in the frontend built - in lib
                     return item.do_action(special_command, self.game)
 
@@ -234,8 +231,6 @@ class Parser:
             self.parse_command(cmd)
 
     def get_direction(self, command):
-        #TODO: Consider changing this
-        command = command.lower()
         if command == "n" or "north" in command:
             return "north"
         if command == "s" or "south" in command:
