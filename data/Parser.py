@@ -14,28 +14,36 @@ class Parser:
         self.game = game
 
     def get_player_intent(self, command):
-        # Let the player type in a comma-separated sequence of command
+        # Comma-separated sequence of command
         if "," in command:
             return "sequence"
+
         # Check for direction intent
         elif self.get_direction(command):
             return "direction"
+
         # TODO: Consider changing this
         # Redescribe the environment (Location)
         elif command == "look" or command == "l":
             return "redescribe"
+
         # Examine
         elif "examine" in command or command.startswith("x "):
             return "examine"
+
         # Take Item
         elif "take" in command:
             return "take"
+
         # Drop Item
         elif "drop" in command:
             return "drop"
+
         # Check inventory
         elif "inventory" in command or command == "i":
             return "inventory"
+
+        # Special commands
         else:
             for item in self.game.get_items_in_scope():
                 special_commands = item.get_commands()
@@ -45,31 +53,21 @@ class Parser:
 
     def parse_command(self, command):
         """
-        By default, none of the intents end the game.
+        Intents are functions that can be executed.
+        By default, none of the intents ends the game.
         The following are ways this flag can be changed to True:
-        * Going to a certain place
-        * Entering a certain special command
-        * Picking up a certain object
-        :param command:
-        :return:
+        * Going to a certain Location
+        * Triggering a certain Special Command
+        * Picking up a certain Item
+        :param command: user command
+        :return: whether the game ends or not
         """
         # Add this command to history
         self.command_history.append(command)
         end_game = False
 
-        # Intents are functions that can be executed
+        # TODO: Make the parser able to handle tokens instead of commands
         intent = self.get_player_intent(command)
-        # intent_dict = {
-        #     "direction": self.go_in_direction(command),
-        #     "redescribe": self.game.describe(),
-        #     "examine": self.examine(command),
-        #     "take": self.take(command),
-        #     "drop": self.drop(command),
-        #     "inventory": self.check_inventory(command),
-        #     "special": self.run_special_command(command),
-        #     "sequence": self.execute_sequence(command)
-        # }
-
         if intent == "direction":
             end_game = self.go_in_direction(command)
         elif intent == "redescribe":
@@ -200,7 +198,7 @@ class Parser:
         if not matched_item:
             for item_name in self.game.inventory:
                 if item_name in command:
-                    matched_item =True
+                    matched_item = True
                     item = self.game.inventory[item_name]
                     self.game.curr_location.add_item(item_name, item)
                     self.game.inventory.pop(item_name)
@@ -231,23 +229,18 @@ class Parser:
             self.parse_command(cmd)
 
     def get_direction(self, command):
-        if command == "n" or "north" in command:
-            return "north"
-        if command == "s" or "south" in command:
-            return "south"
-        if command == "e" or "east" in command:
-            return "east"
-        if command == "w" or "west" in command:
-            return "west"
-        if command == "up" in command:
-            return "up"
-        if command == "down" in command:
-            return "down"
-        if command.startswith("go out"):
-            return "out"
-        if command.startswith("go in"):
-            return "in"
-        for exit in self.game.curr_location.connections.keys():
-            if command == exit.lower() or command == "go "+exit.lower():
-                return exit
+        directions = ["east", "west", "south", "north", "up", "down", "out", "in"]
+        direction_dispatch = {"go {direction}".format(direction=direction): direction for direction in directions}
+
+        exits = self.game.curr_location.connections.keys()
+        exit_dispatch = {"go {exit}".format(exit=exit): exit for exit in exits}
+
+        for direction in direction_dispatch.keys():
+            if direction in command:
+                return direction_dispatch[direction]
+
+        for exit in exit_dispatch.keys():
+            if exit in command:
+                return exit_dispatch[exit]
+
         return None

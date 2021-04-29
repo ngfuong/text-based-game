@@ -6,9 +6,7 @@ from nlp.generate_commands import *
 
 
 def build_game():
-    """
-    Edit this to customize the story of the game
-    """
+    """Edit this to customize the story of the game."""
     # Locations
     cottage = Location("Cottage",
                        "You are standing in a small cottage.")

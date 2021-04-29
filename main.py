@@ -1,6 +1,5 @@
-from data import Parser
-from data.build_game import build_game
 from data.Parser import Parser
+from data.build_game import build_game
 
 
 def game_loop():
@@ -10,13 +9,14 @@ def game_loop():
 
     while True:
         command = input(">").lower()
-        if not (command == "quit" or command == "q"):
+        if command == "quit":
+            return
+        else:
             end_game = parser.parse_command(command)
             if end_game:
                 return
-        else:
-            return
 
 
-game_loop()
-print('THANKS FOR PLAYING.')
+if __name__ == "__main__":
+    game_loop()
+    print('THANKS FOR PLAYING.')

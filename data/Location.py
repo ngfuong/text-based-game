@@ -1,4 +1,4 @@
-from . import check_preconditions
+from data.check_preconditions import check_preconditions
 
 
 class Location:
@@ -86,12 +86,12 @@ class Location:
 
     def is_blocked(self, direction, game):
         """
-        Check if there is an obstable in this Direction
+        Check if there is an obstacle in this Direction
         :param direction:
         :param game:
         :return:
         """
-        if not direction in self.blocks:
+        if direction not in self.blocks:
             return False
         (block_description, preconditions) = self.blocks[direction]
         if check_preconditions(preconditions, game):
@@ -105,7 +105,7 @@ class Location:
         :param direction:
         :return: block_description
         """
-        if not direction in self.blocks:
+        if direction not in self.blocks:
             return ""
         else:
             (block_description, preconditions) = self.blocks[direction]
@@ -120,5 +120,4 @@ class Location:
         :param preconditions:
         :return:
         """
-        self.blocks[blocked_direction] = (blocked_direction, preconditions)
-
+        self.blocks[blocked_direction] = (block_description, preconditions)

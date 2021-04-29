@@ -1,5 +1,6 @@
 import itertools
 import json
+import os
 from nlp.manually_annotate import *
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
@@ -21,10 +22,7 @@ def save_to_file(word_senses, confirmed_hypernyms, confirmed_hyponyms, file_path
 
 
 def read_from_file(input_file_path):
-    """
-    This function reads your annotations from a local file.
-    :return:
-    """
+    """This function reads your annotations from a local file."""
     input_file = input_file_path
     with open(input_file, 'r') as f:
         data = json.load(f)
@@ -37,10 +35,8 @@ def read_from_file(input_file_path):
 
 
 def get_alternatives(word, word_senses, confirmed_hypernyms, confirmed_hyponyms):
-    """
-    Create a list of reasonable alternative for a word
-    by listing out the synonyms for its word sense, and for its hyponyms and hypernyms
-    """
+    """Create a list of reasonable alternative for a word
+    by listing out the synonyms for its word sense, and for its hyponyms and hypernyms."""
     alternatives = []
     if word not in word_senses:
         alternatives.append(word)
@@ -97,16 +93,16 @@ def generate_annotations(commands):
 def generate_command_dict(commands, file_path="/home/ngfuong/programming/text-based-game/nlp/word-annotations.json"):
     """
     Generate alternative commands a dictionary of {main-commands:list of alternatives}
-    :return:
+    :return: a dictionary with keys as input commands and values as list of respective alternative commands.
     """
     try:
         filesize = os.path.getsize(file_path)
         if filesize == 0:
-            #print("NO ANNOTATION DATA.", end=' ')
+            # print("NO ANNOTATION DATA.", end=' ')
             senses, hypernyms, hyponyms = generate_annotations(commands)
             save_to_file(senses, hypernyms, hyponyms, file_path)
         else:
-            #print("IMPORTING LOCAL ANNOTATIONS...")
+            # print("IMPORTING LOCAL ANNOTATIONS...")
             senses, hypernyms, hyponyms = read_from_file(file_path)
     except OSError:
         print("OSError: File does not exist or inaccessible!")

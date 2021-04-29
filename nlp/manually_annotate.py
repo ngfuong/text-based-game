@@ -1,18 +1,11 @@
-#import nltk
-#nltk.download('wordnet')
-#nltk.download('punkt')
-
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
-import os
 
 
 def get_senses(word):
-    """
-    Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
+    """Words can have multiple meanings. WordNet organizes word senses into a structure called synsets.
     Each word can have multiple synsets, each synset represents a different meaning of that word.
-    :return: a list of senses (synsets) of a word
-    """
+    :return: a list of senses (synsets) of a word."""
     word_senses = wn.synsets(word)
     return word_senses
 
@@ -28,13 +21,12 @@ def get_synonyms(word_sense):
         synonyms.append(synonym)
     return synonyms
 
-"""
-For example, red is a specific kind of color, or microbe is a kind of organism.
-If X is-a Y then X is a hyponym of Y, and Y is a hypernym of X.
-So red is a hyponym of color and color is a hypernym of red.
-In WordNet, each word sense (synset) has its own hypernyms and hyponyms.
-"""
+
 def get_hypernyms(word_sense, depth=5):
+    """For example, red is a specific kind of color, or microbe is a kind of organism.
+    If X is-a Y then X is a hyponym of Y, and Y is a hypernym of X.
+    So red is a hyponym of color and color is a hypernym of red.
+    In WordNet, each word sense (synset) has its own hypernyms and hyponyms."""
     hyper = lambda s: s.hypernyms()
     return list(word_sense.closure(hyper, depth=depth))
 
@@ -45,10 +37,8 @@ def get_hyponyms(word_sense, depth=5):
 
 
 def annotate_synsets(sentences):
-    """
-    This function queries WordNet for each word in each sentence in a list of sentences,
-    and asks the user to choose the appropriate meaning/synset for the word.
-    """
+    """This function queries WordNet for each word in each sentence in a list of sentences,
+    and asks the user to choose the appropriate meaning/synset for the word."""
     word_senses = {}
     # Cached selections maps a word string to the previous selection for this word (an int)
     cached_selections = {}
@@ -60,8 +50,8 @@ def annotate_synsets(sentences):
         for word in words:
             synsets = wn.synsets(word)
             if len(synsets) != 0:
-                selection = select_synset(sent, word, synsets, cached_selections)
-                if selection != None:
+                selection = select_synset(word, synsets, cached_selections)
+                if selection is not None:
                     cached_selections[word] = selection
                     if selection < len(synsets):
                         s = synsets[selection]
@@ -70,9 +60,9 @@ def annotate_synsets(sentences):
     return word_senses
 
 
-def select_synset(sent, word, synsets, cached_selections):
-    """Ask the user to select which sense of the word
-       is being used in this sentence."""
+def select_synset(word, synsets, cached_selections):
+    """Ask the user to select which sense of the word is being used in this sentence.
+       Previous synset selection of the prev word is available."""
     print(word.upper())
 
     prev_selection = -1
@@ -82,10 +72,10 @@ def select_synset(sent, word, synsets, cached_selections):
     for choice, s in enumerate(synsets):
         if choice == prev_selection:
             print("*** ", end='')
-        print("%d) %s - %s" % (choice, s.name(), s.definition()))
+        print("{choice}) {name} - {definition}".format(choice=choice, name=s.name(), definition=s.definition()))
 
     choice += 1
-    if choice == prev_selection:
+    if choice+1 == prev_selection:
         print("*** ", end='')
     print("%d) None of these." % choice)
 
@@ -97,7 +87,7 @@ def select_synset(sent, word, synsets, cached_selections):
                 # The user can press 'x' to exit.
                 return None
             if user_input.strip() == '' and prev_selection > -1:
-                # The user can press retrun to confirm the previous selection.
+                # The user can press return to confirm the previous selection.
                 return prev_selection
             selection = int(user_input)
         except:
@@ -123,8 +113,9 @@ def confirm_hyponyms(word, synset, do_hypernyms_instead=False):
 
     while len(unconfirmed) > 0:
         s = unconfirmed.pop(0)
-        print("Is {name} an appropriate substitute for {word}? (y/n/x)".format(name=s.name().upper(),
-                                                                             word=word.upper()))
+        print("Is {name} an appropriate substitute for {word}? (y/n/x)".format(
+            name=s.name().upper(),
+            word=word.upper()))
         print("It means:", s.definition())
         print("Synonyms are:", get_synonyms(s))
         user_input = ''
@@ -148,5 +139,3 @@ def confirm_hyponyms(word, synset, do_hypernyms_instead=False):
                 user_input = ''
             print()
     return confirmed
-
-
