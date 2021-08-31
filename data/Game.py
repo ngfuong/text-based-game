@@ -1,3 +1,6 @@
+from formatter.text_format import *
+
+
 class Game:
     """
     This represents the world.
@@ -31,7 +34,7 @@ class Game:
         List the current Location.
         :return:
         """
-        print(self.curr_location.description)
+        print_bold(self.curr_location.description)
 
     def describe_exits(self):
         """
@@ -42,14 +45,14 @@ class Game:
         for exit in self.curr_location.connections.keys():
             exits.append(exit.capitalize())
         if len(exits) > 0:
-            print("Exits: ", end='')
-            print(*exits, sep=", ",)
+            print_bold("Exits: ", end='')
+            print_bold(*exits, sep=", ",)
 
     def describe_items(self):
         items = self.curr_location.items
         if len(items) > 0:
-            print("There is ", end='') if len(items) == 1 else print("There are ", end='')
-            print(", ".join(items[item_name].description for item_name in items)+'.')
+            print_bold("There is ", end='') if len(items) == 1 else print_bold("There are ", end='')
+            print_bold(", ".join(items[item_name].description for item_name in items)+'.')
             # for item_name in self.curr_location.items:
             #     item = self.curr_location.items[item_name]
             #     print(item.description)

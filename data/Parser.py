@@ -1,3 +1,6 @@
+from formatter.text_format import *
+
+
 class Parser:
     """
     This handles the player's input.
@@ -85,7 +88,7 @@ class Parser:
         elif intent == "sequence":
             end_game = self.execute_sequence(command)
         else:
-            print("Not sure what you want to do.")
+            print_italic("Not sure what you want to do.")
 
         return end_game
 
@@ -102,7 +105,7 @@ class Parser:
         if direction:
             if direction in self.game.curr_location.connections:
                 if self.game.curr_location.is_blocked(direction, self.game):
-                    print(self.game.curr_location.get_blocked_description(direction))
+                    print_bold(self.game.curr_location.get_blocked_description(direction))
                 else:
                     self.game.curr_location = self.game.curr_location.connections[direction]
 
@@ -112,7 +115,7 @@ class Parser:
                         self.game.describe()
 
             else:
-                print("You cannot travel in that direction. Try something else.")
+                print_italic("You try to go but cannot find the way.")
         return self.game.curr_location.end_game
 
     def check_inventory(self, command):
@@ -122,14 +125,15 @@ class Parser:
         :return:
         """
         if len(self.game.inventory) == 0:
-            print("Your inventory is empty.")
+            print_italic("You checked your inventory first and found nothing.")
         else:
             descriptions = []
             for item_name in self.game.inventory:
                 item = self.game.inventory[item_name]
                 descriptions.append(item.description)
-            print("You have:", end=' ')
-            print(*descriptions, sep=", ",)
+            print_italic("You have:", end=' ')
+            print_bold(*descriptions, sep=", ",)
+            return 1
 
     def examine(self, command):
         """
@@ -137,13 +141,18 @@ class Parser:
         :param command:
         :return:
         """
+        # Check if object is present
+        if len(command.split()) == 0:
+            print_italic("You cannot think of a thing to examine.")
+            return
+
         # Item in command matches items in current Location
         for item_name in self.game.curr_location.items:
             if item_name in command:
                 item = self.game.curr_location.items[item_name]
                 if item.examine_text:
                     # Describe item in Location and bypass checking item in Inventory
-                    print(item.examine_text)
+                    print_bold(item.examine_text)
                     return
 
         # Item in command matches items in Inventory
@@ -152,7 +161,7 @@ class Parser:
                 item = self.game.inventory[item_name]
                 if item.examine_text:
                     # Describe item in Inventory
-                    print(item.examine_text)
+                    print_bold(item.examine_text)
                     return
 
     def take(self, command):
@@ -172,17 +181,17 @@ class Parser:
                 if item.gettable:
                     self.game.add_to_inventory(item)
                     self.game.curr_location.remove_item(item)
-                    print(item.take_text)
+                    print_bold(item.take_text)
                     end_game = item.end_game
                 else:
-                    print("You cannot take this item.")
+                    print_italic("You try to take the item but fail.")
                     break
                 matched_item = True
                 break
 
         # Not matched
         if not matched_item:
-            print("You cannot find this item.")
+            print_italic("You try to search but cannot find this item.")
 
         return end_game
 
@@ -192,6 +201,11 @@ class Parser:
         :param command:
         :return:
         """
+        # Check inventory
+        if len(self.game.inventory) == 0:
+            print_italic("Your inventory is empty.")
+            return
+
         matched_item = False
 
         # Item in command matches items in Inventory
@@ -202,12 +216,12 @@ class Parser:
                     item = self.game.inventory[item_name]
                     self.game.curr_location.add_item(item_name, item)
                     self.game.inventory.pop(item_name)
-                    print('You successfully drop this item.')
+                    print_italic('You successfully drop {item}.'.format(item=item.name))
                     break
 
         # No match
         if not matched_item:
-            print("You don't have that item.")
+            print_italic("You don't have that item.")
 
     def run_special_command(self, command):
         """

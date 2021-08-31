@@ -1,3 +1,6 @@
+from formatter.text_format import *
+
+
 def add_item_to_inventory(game, *args):
     """
     Add a newly created Item into your Inventory
@@ -7,11 +10,11 @@ def add_item_to_inventory(game, *args):
     """
     (item, action_description, already_done_description) = args[0]
     if not game.is_in_inventory(item):
-        print(action_description)
+        print_bold(action_description)
         game.add_to_inventory(item)
-        print("You've just got a {item}.".format(item=item.name))
+        print_italic("You've just got a {item}.".format(item=item.name))
     else:
-        print(already_done_description)
+        print_italic(already_done_description)
     return False
 
 
@@ -23,7 +26,7 @@ def describe_something(game, *args):
     :return:
     """
     (description) = args[0]
-    print(description)
+    print_bold(description)
     return False
 
 
@@ -37,12 +40,12 @@ def destroy_item(game, *args):
     (item, action_description, already_done_description) = args[0]
     if game.is_in_inventory(item):
         game.inventory.pop(item.name)
-        print(action_description)
+        print_bold(action_description)
     elif item.name in game.curr_location.items:
         game.curr_location.remove_item(item)
-        print(action_description)
+        print_bold(action_description)
     else:
-        print(already_done_description)
+        print_bold(already_done_description)
     return False
 
 
@@ -54,6 +57,6 @@ def end_game(game, *args):
     :return: whether the game ends or not
     """
     end_message = args[0]
-    print(end_message)
+    print_bold(end_message)
     return True
 

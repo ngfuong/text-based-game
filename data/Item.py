@@ -1,4 +1,5 @@
 from data.check_preconditions import check_preconditions
+from formatter.text_format import *
 
 class Item:
     """
@@ -61,7 +62,7 @@ class Item:
             if check_preconditions(preconditions, game):
                 end_game = function(game, arguments)
         else:
-            print("You cannot do that. Try something else.")
+            print_italic("You cannot do that. Try something else.")
         return end_game
 
 
