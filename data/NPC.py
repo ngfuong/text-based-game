@@ -1,36 +1,28 @@
+import formatter.text_format
 from data.check_preconditions import check_preconditions
-from formatter.text_format import *
 
 
-class Item:
+class NPC:
     """
-    Items are objects that a player can take or examine.
+    Non-player Characters (NPC) are beings in game that player can interact with.
+    The location of the NPC should change according to the story of the game.
+    E.g: when a story flag is triggered
+    Player can interact with the NPC and converse with them.
     """
-    def __init__(self, name, description, examine_text="", take_text="", start_at=None, gettable=True, end_game=False):
+    def __init__(self, name, genre, description, location, interact_text=""):
         """
-        :param name: Item name
-        :param description: default description of Item
-        :param examine_text: detailed description when the player examines the Item
-        :param take_text: text displayed when the player takes the Item
-        :param start_at: the initial Location of the Item
-        :param gettable: indicates whether the player can take the object and put it in their Inventory
-        :param end_game: True if entering this Location should end the game
+        :param location: the location in the game where the NPC is located
+        :param genre: the genre of the NPC (he/she/they/it)
+        :return: none
         """
         self.name = name
+        self.pronoun = genre
         self.description = description
-        if examine_text == "":
-            self.examine_text = "You do not see anything special."
-        else:
-            self.examine_text = examine_text
-        if take_text == "":
-            self.take_text = "You have taken the {name}.".format(name=self.name)
-        else:
-            self.take_text = take_text
-        self.gettable = gettable
-        self.end_game = end_game
+        self.location = location
+        if interact_text == "":
+            self.interact_text = "You try to interact with {name} but {pronoun} does not react."\
+                .format(name=self.name, pronoun=self.pronoun)
 
-        if start_at:
-            start_at.add_item(name,self)
         self.commands = {}
 
     def get_commands(self):
@@ -65,8 +57,5 @@ class Item:
             if check_preconditions(preconditions, game):
                 end_game = function(game, arguments)
         else:
-            print_italic("You cannot do that. Try something else.")
+            formatter.text_format.print_italic("You cannot do that. Try something else.")
         return end_game
-
-
-

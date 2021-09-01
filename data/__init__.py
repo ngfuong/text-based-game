@@ -1,1 +1,1 @@
-__all__ = ["build_game", "check_preconditions","special_functions", "Game", "Item", "Location", "Parser"]
+__all__ = ["build_demo_game.py", "check_preconditions", "special_functions", "Game", "Item", "Location", "Parser"]

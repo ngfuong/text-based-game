@@ -1,3 +1,3 @@
-from main import game_loop
+from web import game_loop
 
 game_loop()
