@@ -8,10 +8,10 @@ from nlp.generate_commands import *
 def build_game():
     """Edit this to customize the story of the game."""
     # Locations
-    lounge = Location("Lookout Tower",
+    downstairs = Location("Tower Downstairs",
                       "You are standing in the lounge of the lookout tower.")
 
-    lookout_spot = Location("Lookout Spot",
+    upstairs = Location("Tower Upstairs",
                             "You are standing in the middle of the lookout spot, on the upper level of the tower.")
     yard = Location("Outer Yard",
                     "You are in the outer yard of the tower.")
@@ -19,29 +19,26 @@ def build_game():
                      "You wander into the woods near the tower.")
 
     # Connections
-    lounge.add_connection("up", lookout_spot)
-    lounge.add_connection("out", yard)
-    yard.add_connection("out", woods)
-    yard.add_connection("in", lounge)
-    woods.add_connection("in", yard)
-    lookout_spot.add_connection("down", lounge)
+    downstairs.add_connection("up", upstairs)
+    downstairs.add_connection("out", woods)
+    upstairs.add_connection("down", downstairs)
 
     # Items that can be pick up
-    fishing_pole = Item("pole", "a fishing pole", "It's just a simple fishing pole.",
-                        start_at=cottage)
-    potion = Item("potion", "a bottle of potion", "It's bright green and steaming.",
-                  start_at=cottage,
-                  take_text="As you get near the potion, the fumes cause you to faint and lose the game. THE END.",
-                  end_game=True)
-    rosebush = Item("rosebush", "a rosebush", "The rosebush contains a single red rose. It is beautiful.",
-                    start_at=garden_path)
-    rose = Item("rose", "a red rose", "It smells good.")
-    fish = Item("fish", "a fish", "The fish is dead. It smells terrible.")
+    # fishing_pole = Item("pole", "a fishing pole", "It's just a simple fishing pole.",
+    #                     start_at=cottage)
+    # potion = Item("potion", "a bottle of potion", "It's bright green and steaming.",
+    #               start_at=cottage,
+    #               take_text="As you get near the potion, the fumes cause you to faint and lose the game. THE END.",
+    #               end_game=True)
+    # rosebush = Item("rosebush", "a rosebush", "The rosebush contains a single red rose. It is beautiful.",
+    #                 start_at=garden_path)
+    # rose = Item("rose", "a red rose", "It smells good.")
+    # fish = Item("fish", "a fish", "The fish is dead. It smells terrible.")
 
     # Items that cannot be pick up
-    pond = Item("pond", "a small fishing pond", "There are fish swimming in the pond.",
-                start_at=fishing_pond,
-                gettable=False)
+    # pond = Item("pond", "a small fishing pond", "There are fish swimming in the pond.",
+    #             start_at=fishing_pond,
+    #             gettable=False)
 
     """
     Add special functions to items
@@ -77,4 +74,4 @@ def build_game():
                         (
                             "That's disgusting! It's raw! And definitely not sashima-grade! But you've won this version of the game. THE END."))
 
-    return Game(cottage)
+    return Game(downstairs)
